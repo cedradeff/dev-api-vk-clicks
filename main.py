@@ -18,9 +18,8 @@ def is_shorten_link(token, link):
 
 def count_clicks(token, link):
     url = "https://api.vk.ru/method/utils.getLinkStats"
-
-    parsed = urlparse(link)
-    key_param = parsed.path[1:]
+    link_parsed = urlparse(link)
+    key_param = link_parsed.path[1:]
     headers = {"Authorization": token}
     payload = {"v": "5.199", "key": key_param, "interval": "forever"}
     response = requests.get(url, headers=headers, params=payload)
