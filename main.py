@@ -12,8 +12,8 @@ def is_shorten_link(token, link):
     payload = {"v": '5.199', "key": key_param}
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
-    response_data = response.json()
-    return "error" not in response_data
+    parsed_response = response.json()
+    return "error" not in parsed_response
 
 
 def count_clicks(token, link):
@@ -24,11 +24,11 @@ def count_clicks(token, link):
     payload = {"v": "5.199", "key": key_param, "interval": "forever"}
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
-    response_data = response.json()
-    if "error" in response_data:
-        error_msg = response_data["error"]["error_msg"]
+    parsed_response = response.json()
+    if "error" in parsed_response:
+        error_msg = parsed_response["error"]["error_msg"]
         raise requests.HTTPError(error_msg)
-    stats = response_data.get('response', {}).get('stats', [])
+    stats = parsed_response.get('response', {}).get('stats', [])
     if not stats:
         return 0
     clicks_count = stats[0]['views']
@@ -41,15 +41,16 @@ def shorten_link(token, link):
     payload = {"v": '5.199', "url": link, "private": "0"}
     response = requests.get(url, headers=headers, params=payload)
     response.raise_for_status()
-    response_data = response.json()
-    if "error" in response_data:
-        error_msg = response_data["error"]["error_msg"]
+    parsed_response = response.json()
+    if "error" in parsed_response:
+        error_msg = parsed_response["error"]["error_msg"]
         raise requests.HTTPError(error_msg)
-    short_link = response_data["response"]["short_url"]
+    short_link = parsed_response["response"]["short_url"]
     return short_link
 
 
 def main():
+    load_dotenv()
     token = os.environ["VK_ACCESS_TOKEN"]
     user_input = input("Введите ссылку: ")
     if is_shorten_link(token, user_input):
@@ -67,5 +68,4 @@ def main():
 
 
 if __name__ == '__main__':
-    load_dotenv()
     main()
