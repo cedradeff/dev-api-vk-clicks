@@ -4,12 +4,28 @@
 ## Установка
 1. Python 3 уже должен быть установлен.
 2. Склонируйте проект:
-`git clone https://github.com/cedradeff/dev-api-vk-clicks`
+```bash
+git clone https://github.com/cedradeff/dev-api-vk-clicks
+```
 2. Затем используйте `pip` для установки зависимостей:
-`pip install -r requirements`
-3. Рекомендуется использовать venv для изоляции проекта.
-4. Для работы скрипта необходим токен VK API, который необходимо добавить в переменную окружения `VK_ACCESS_TOKEN` файла .env
+```bash
+pip install -r requirements
+```
+4. Рекомендуется использовать venv для изоляции проекта.
+5. Для работы скрипта необходим токен VK API, который необходимо добавить в переменную окружения `VK_ACCESS_TOKEN` файла .env
 
 ### Запуск
-Запустить скрипт добавив ссылку:
-`python main.py [link]`
+Запустите скрипт с вашей ссылкой в качестве аргумента.
+
+**Примеры:**
+
+Получить сокращенную ссылку:
+```python
+$ python main.py https://docs.python.org/3.6/howto/argparse.html
+Сокращенная ссылка:  https://vk.cc/cxIoAO
+```
+Узнать количество переходов по сокращенной ссылке:
+```python
+$ python main.py https://vk.cc/cxIoAO
+Количество переходов:  2
+```
